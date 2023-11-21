@@ -9,6 +9,9 @@ class Pokemon extends Model
 {
     use HasFactory;
 
+    // 複数形だとEloquentが認識しないので設定
+    protected $table = 'pokemons';
+
     /**
      * The attributes that are mass assignable.
      *
