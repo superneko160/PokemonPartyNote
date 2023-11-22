@@ -9,47 +9,44 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <table class="border-collapse border border-slate-500">
-                    @if (isset($parties))
-                        <thead>
-                        <tr class="">
-                            <th class="border border-slate-600">ID</th>
-                            <th class="border border-slate-600">公開コード</th>
-                            <th class="border border-slate-600">1匹目</th>
-                            <th class="border border-slate-600">2匹目</th>
-                            <th class="border border-slate-600">3匹目</th>
-                            <th class="border border-slate-600">4匹目</th>
-                            <th class="border border-slate-600">5匹目</th>
-                            <th class="border border-slate-600">6匹目</th>
+                    <table class="table-auto border-collapse border border-slate-500">
+                        <tr>
+                            <th class="px-2 py-1 border border-slate-600">詳細</th>
+                            <th class="px-2 py-1 border border-slate-600">公開コード</th>
+                            @for ($i = 1; $i <= 6; $i++)
+                                <th class="px-2 py-1 border border-slate-600">{{ $i }}体目</th>
+                            @endfor
+                            <th class="px-2 py-1 border border-slate-600">登録・削除</th>
+                            <th class="px-2 py-1 border border-slate-600">削除</th>
                         </tr>
-                        </thead>
-                        <tbody>
                         @foreach ($parties as $party)
-                            <tr class="">
-                            @if (isset($party))
-                                <td class="border border-slate-700">{{ $party->id }}</td>
-                                <td class="border border-slate-700">{{ $party->public_code }}</td>
-                                <td class="border border-slate-700">{{ $party->pokemon_id1 }}</td>
-                                <td class="border border-slate-700">{{ $party->pokemon_id2 }}</td>
-                                <td class="border border-slate-700">{{ $party->pokemon_id3 }}</td>
-                                <td class="border border-slate-700">{{ $party->pokemon_id4 }}</td>
-                                <td class="border border-slate-700">{{ $party->pokemon_id5 }}</td>
-                                <td class="border border-slate-700">{{ $party->pokemon_id6 }}</td>
-                            @else
-                                <td class="border border-slate-700">Empty Slot</td>
-                                <td class="border border-slate-700"></td>
-                                <td class="border border-slate-700"></td>
-                                <td class="border border-slate-700"></td>
-                                <td class="border border-slate-700"></td>
-                                <td class="border border-slate-700"></td>
-                                <td class="border border-slate-700"></td>
-                                <td class="border border-slate-700"></td>
-                            @endif
-                            </tr>
+                        <tr>
+                            <td class="px-2 py-0.5 border border-slate-600">
+                                <img src="{{ asset('images/search_ico.svg')}}">
+                            </td>
+                            <td class="px-2 py-0.5 border border-slate-600">
+                                {{ $party["public_code"] }}
+                            </td>
+                            @for ($i = 0; $i < 6; $i++)
+                                @if (!empty($party[$i]))
+                                    <td class="px-2 py-0.5 border border-slate-600">
+                                        {{ $party[$i] }}
+                                    </td>
+                                @else
+                                    <td class="px-2 py-0.5 border border-slate-600">
+                                        空きスロット
+                                    </td>
+                                @endif
+                            @endfor
+                            <td class="px-2 py-0.5 border border-slate-600">
+                                <x-primary-button>登録・更新</x-primary-button>
+                            </td>
+                            <td class="px-2 py-0.5 border border-slate-600">
+                                <x-danger-button>削除</x-danger-button>
+                            </td>
+                        </tr>
                         @endforeach
-                        </tbody>
-                    @endif
-                    <table>
+                    </table>
                 </div>
             </div>
         </div>
