@@ -19,6 +19,7 @@ class PartyController extends Controller
         $parties = [];
         for ($i = 0; $i < 6; $i++) {
             $party = Party::find($request->user()->party_id . ($i + 1));
+            $parties[$i]["id"] = isset($party["id"]) ? $party["id"] : "";
             $parties[$i]["public_code"] = isset($party["public_code"]) ? $party["public_code"] : "";
             for ($j = 1; $j <= 6; $j++) {
                 if (isset($party["pokemon_id" . $j])) {
@@ -40,13 +41,16 @@ class PartyController extends Controller
     public function show(Request $request): View
     {
         // パーティIDからそのパーティを構成するポケモンの詳細を取得
+        $query = $request->query();
         $pokemons = [];
-        $party = Party::find($request->user()->party_id . ($i + 1));
-        for ($i = 1; $i <= 6; $i++) {
-            $pokemon = Pokemon::find($party["pokemon_id" . $i]);
-            $pokemons[] = isset($pokemon) ? $pokemon : "";
+        if (isset($query["id"])) {
+            $party = Party::find($query["id"]);
+            for ($i = 1; $i <= 6; $i++) {
+                $pokemon = Pokemon::find($party["pokemon_id" . $i]);
+                $pokemons[] = isset($pokemon) ? $pokemon : "";
+            }
         }
-        return view('', ['pokemons' => $pokemons]);
+        return view('show', ['pokemons' => $pokemons]);
     }
 
     /**

@@ -22,7 +22,9 @@
                         @foreach ($parties as $party)
                         <tr>
                             <td class="px-2 py-0.5 border border-slate-600">
-                                <img src="{{ asset('images/search_ico.svg')}}">
+                                <a href="{{ route('show') }}?id={{ $party['id'] }}">
+                                    <img src="{{ asset('images/search_ico.svg')}}">
+                                </a>
                             </td>
                             <td class="px-2 py-0.5 border border-slate-600">
                                 {{ $party["public_code"] }}
