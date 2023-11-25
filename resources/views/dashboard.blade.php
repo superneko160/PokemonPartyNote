@@ -4,7 +4,6 @@
             {{ Auth::user()->name }}
         </h2>
     </x-slot>
-
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -16,7 +15,7 @@
                             @for ($i = 1; $i <= 6; $i++)
                                 <th class="px-2 py-1 border border-slate-600">{{ $i }}体目</th>
                             @endfor
-                            <th class="px-2 py-1 border border-slate-600">登録・削除</th>
+                            <th class="px-2 py-1 border border-slate-600">更新</th>
                             <th class="px-2 py-1 border border-slate-600">削除</th>
                         </tr>
                         @foreach ($parties as $party)
@@ -41,7 +40,7 @@
                                 @endif
                             @endfor
                             <td class="px-2 py-0.5 border border-slate-600">
-                                <x-primary-button>登録・更新</x-primary-button>
+                                <a href="{{ route('edit', ['id' => $party['id']]) }}"><x-primary-button>更新</x-primary-button></a>
                             </td>
                             <td class="px-2 py-0.5 border border-slate-600">
                                 <x-danger-button>削除</x-danger-button>

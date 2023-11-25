@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use App\Models\Party;
 use App\Models\Pokemon;
 use Illuminate\View\View;
@@ -54,29 +55,45 @@ class PartyController extends Controller
     }
 
     /**
-     * Display the user's profile form.
+     * Display the party edit.
      */
     public function edit(Request $request): View
     {
-        // return view('profile.edit', [
-        //     'user' => $request->user(),
-        // ]);
+        // パーティIDからそのパーティを構成するポケモンの詳細を取得
+        $query = $request->query();
+        $party_id = 0;
+        $pokemons = [];
+        if (isset($query["id"])) {
+            $party_id = $query["id"];
+            $party = Party::find($query["id"]);
+            for ($i = 1; $i <= 6; $i++) {
+                $pokemon = Pokemon::find($party["pokemon_id" . $i]);
+                $pokemons[] = isset($pokemon) ? $pokemon : "";
+            }
+        }
+        return view('edit', ['party_id' => $party_id, 'pokemons' => $pokemons]);
     }
 
     /**
-     * Update the user's profile information.
+     * Update the pokemon information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(Request $request, int $pokemon_id): RedirectResponse
     {
-        // $request->user()->fill($request->validated());
-
-        // if ($request->user()->isDirty('email')) {
-        //     $request->user()->email_verified_at = null;
-        // }
-
-        // $request->user()->save();
-
-        // return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        // DB保存後、詳細画面へリダイレクトさせるためパーティIDをhiddenから取得
+        $party_id = $request->input('party_id');
+        // 更新対象のポケモンを取得
+        $pokemon = Pokemon::find($pokemon_id);
+        // リクエストを連想配列で取得
+        $params = $request->only(
+            'name', 'ability', 'item', 'teratype', 'nature',
+            'h', 'a', 'b', 'c', 'd', 's',
+            'move1', 'move2', 'move3', 'move4', 'note'
+        );
+        // データを保存
+        $pokemon->fill($params);
+        $pokemon->save();
+        // パーティ詳細画面へリダイレクト
+        return redirect()->route('show', ['id' => $party_id])->with('status', 'pokemon-updated');
     }
 
     /**
