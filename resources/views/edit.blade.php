@@ -10,6 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     @foreach ($pokemons as $pokemon)
+                        
                         <form method="POST" action="{{ route('edit.update', ['pokemonId' => $pokemon['id']]) }}">
                         @method('PUT')
                         @csrf
@@ -49,7 +50,14 @@
                             <x-primary-button>変更確定</x-primary-button>
                         </div>
                         </form>
+                        
                     @endforeach
+
+                    <form method="POST" action="{{ route('destroy', ['partyId' => $party_id])}}">
+                        @csrf
+                        @method('DELETE')
+                        <x-danger-button>パーティ削除</x-danger-button>
+                    </form>
                 </div>
             </div>
         </div>

@@ -15,8 +15,7 @@
                             @for ($i = 1; $i <= 6; $i++)
                                 <th class="px-2 py-1 border border-slate-600">{{ $i }}体目</th>
                             @endfor
-                            <th class="px-2 py-1 border border-slate-600">更新</th>
-                            <th class="px-2 py-1 border border-slate-600">削除</th>
+                            <th class="px-2 py-1 border border-slate-600">作成・編集</th>
                         </tr>
                         @foreach ($parties as $party)
                         <tr>
@@ -39,12 +38,16 @@
                                     </td>
                                 @endif
                             @endfor
-                            <td class="px-2 py-0.5 border border-slate-600">
-                                <a href="{{ route('edit', ['id' => $party['id']]) }}"><x-primary-button>更新</x-primary-button></a>
-                            </td>
-                            <td class="px-2 py-0.5 border border-slate-600">
-                                <x-danger-button>削除</x-danger-button>
-                            </td>
+                            
+                            @if (!empty($party["id"]))
+                                <td class="px-2 py-0.5 border border-slate-600 text-center">
+                                    <a href="{{ route('edit', ['id' => $party['id']]) }}"><x-primary-button>編集</x-primary-button></a>
+                                </td>
+                            @else
+                                <td class="px-2 py-0.5 border border-slate-600 text-center">
+                                    <a href="{{ route('create') }}"><x-create-button>作成</x-create-button></a>
+                                </td>
+                            @endif
                         </tr>
                         @endforeach
                     </table>

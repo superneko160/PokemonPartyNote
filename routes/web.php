@@ -49,8 +49,11 @@ Route::middleware(['auth', 'verified'])->group(function() {
 
 Route::middleware('auth')->group(function () {
     Route::get('/show', [PartyController::class, 'show'])->name('show');
+    Route::get('/create', [PartyController::class, 'create'])->name('create');
+    Route::post('/store', [PartyController::class, 'store'])->name('store');
     Route::get('/edit', [PartyController::class, 'edit'])->name('edit');
     Route::put('/edit/{pokemonId}', [PartyController::class, 'update'])->name('edit.update')->where(['pokemonId' => '[0-9]+']);
+    Route::delete('/destroy/{partyId}', [PartyController::class, 'destroy'])->name('destroy')->where(['partyId' => '[0-9]+']);
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

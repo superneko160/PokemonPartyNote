@@ -137,5 +137,14 @@
     "per page": "毎ページ",
     "results": "件",
     "to": "から",
-    "Showing": "表示中："
+    "Showing": "表示中：",
+    "ability": "特性",
+    "item": "道具",
+    "teratype": "テラスタイプ",
+    "nature": "性格",
+    "move1": "技1",
+    "move2": "技2",
+    "move3": "技3",
+    "move4": "技4",
+    "note": "備考"
 }
